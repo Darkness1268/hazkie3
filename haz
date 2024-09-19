@@ -1,0 +1,75 @@
+#Hazkie
+class colors:
+    BIGreen = "[\033[1;92m\]"
+    cyan = "\033[1;36m"
+
+print(colors.BIGreen + """
+╔═══╦══╗─╔═══╦═══╦═══╦═══╦═══╦════╗╔════╦═══╦═══╦╗
+║╔══╣╔╗║─║╔═╗║╔══╣╔═╗║╔═╗║╔═╗║╔╗╔╗║║╔╗╔╗║╔═╗║╔═╗║║
+║╚══╣╚╝╚╗║╚═╝║╚══╣╚═╝║║─║║╚═╝╠╝║║╚╝╚╝║║╚╣║─║║║─║║║
+║╔══╣╔═╗║║╔╗╔╣╔══╣╔══╣║─║║╔╗╔╝─║║────║║─║║─║║║─║║║─╔╗
+║║──║╚═╝║║║║╚╣╚══╣║──║╚═╝║║║╚╗─║║────║║─║╚═╝║╚═╝║╚═╝║
+╚╝──╚═══╝╚╝╚═╩═══╩╝──╚═══╩╝╚═╝─╚╝────╚╝─╚═══╩═══╩═══╝""")
+print(colors.cyan + u'\033[40m' + """
+            ▄▄▄▄
+          ▄██████     ▄▄▄█▄
+        ▄██▀░░▀██▄    ████████▄
+       ███░░░░░░██     █▀▀▀▀▀██▄▄
+     ▄██▌░░░░░░░██    ▐▌       ▀█▄
+     ███░░▐█░█▌░██    █▌         ▀▌
+    ████░▐█▌░▐█▌██   ██
+   ▐████░▐░░░░░▌██   █▌
+    ████░░░▄█░░░██  ▐█
+    ████░░░██░░██▌  █▌
+    ████▌░▐█░░███   █
+    ▐████░░▌░███   ██
+     ████░░░███    █▌
+   ██████▌░████   ██
+ ▐████████████   ███
+ █████████████▄████
+██████████████████
+██████████████████
+█████████████████▀
+█████████████████
+████████████████
+████████████████
+
+
+ """)
+print("[+]A FB AUTO-REPORT v1 Created By HAZKIE DEV[+]")
+
+import requests  
+import time  
+  
+# Facebook API credentials  
+access_token = "YOUR_ACCESS_TOKEN"  
+app_id = "YOUR_APP_ID"  
+app_secret = "YOUR_APP_SECRET"  
+  
+# Facebook page ID  
+page_id = "YOUR_PAGE_ID"  
+  
+# Report interval (in minutes)  
+report_interval = 60  
+  
+def get_page_insights(access_token, page_id):  
+   url = f"https://graph.facebook.com/v13.0/{page_id}/insights?access_token={access_token}"  
+   response = requests.get(url)  
+   return response.json()  
+  
+def send_report(access_token, page_id, insights):  
+   url = f"https://graph.facebook.com/v13.0/{page_id}/feed?access_token={access_token}"  
+   data = {  
+      "message": f"Page Insights Report:\n\n{insights}"  
+   }  
+   response = requests.post(url, json=data)  
+   return response.json()  
+  
+def main():  
+   while True:  
+      insights = get_page_insights(access_token, page_id)  
+      send_report(access_token, page_id, insights)  
+      time.sleep(report_interval * 60)  
+  
+if __name__ == "__main__":  
+   main()
